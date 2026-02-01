@@ -11,6 +11,7 @@
 -- So lets practice this by createing the tables and inserting data into them:
 
 -- Tables Creation:
+
 -- Employee table:
 CREATE TABLE Employees (
     EmployeeID INT PRIMARY KEY,
@@ -63,6 +64,8 @@ SELECT * FROM MonthlySales
 
 -- Let's practice!!!!"
 
+-- Begginer:
+
 -- 1. Row Numbers: Assign a unique row number to every employee, ordered by their salary (highest to lowest):
 SELECT e.Name AS "Employee Name", e.Salary AS "Employee Salary",
 ROW_NUMBER() OVER(ORDER BY Salary DESC) AS "ROW_NUMBER"
@@ -81,3 +84,23 @@ DENSE_RANK() OVER (ORDER BY Salary DESC) AS "DENSE RANK"
 FROM Employees AS e
 
 -- See, here we used DENSE_RANK() and the value it not based on the row location it based on the prevoius value it increased by 1.
+
+
+
+-- Intermediate:
+
+-- 1. Running Total: Calculate a running total of sales Amount for the MonthlySales table, ordered by SaleDate:
+SELECT s.SaleDate AS "Sale Date", s.Amount AS "Sale Amount",
+SUM(s.Amount) OVER(ORDER BY SaleDate, SaleID ) AS "Total Sales Per Date"
+FROM MonthlySales as s
+
+-- 2. Partitioned Totals: Calculate a running total of sales for each category separately.
+SELECT s.Category AS "Category", s.Amount AS "Sale Amount",
+SUM(s.Amount) OVER(PARTITION BY Category ORDER BY SaleID) AS "Sales Per Category"
+FROM MonthlySales as s
+
+-- 3. Comparison to Average: For each employee, show their name, salary, and the average salary of their specific department. (Hint: Use AVG(Salary) OVER(PARTITION BY Department)).
+SELECT e.Name AS "Employee Name", e.Salary AS "Employee Salary", e.Department AS "Department",
+AVG(e.Salary) OVER (PARTITION BY e.Department) AS "Average Salary"
+FROM Employees AS e
+
