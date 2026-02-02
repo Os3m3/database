@@ -103,4 +103,3 @@ FROM MonthlySales as s
 SELECT e.Name AS "Employee Name", e.Salary AS "Employee Salary", e.Department AS "Department",
 AVG(e.Salary) OVER (PARTITION BY e.Department) AS "Average Salary"
 FROM Employees AS e
-
