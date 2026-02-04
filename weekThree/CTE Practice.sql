@@ -129,17 +129,3 @@ JOIN
 EmpSales as es
 ON e.EmployeeID = es.EmployeeID
 WHERE es.TotalSales  > (SELECT AVG(TotalsAvg) FROM CompanyAvg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
